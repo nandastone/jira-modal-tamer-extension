@@ -1,53 +1,56 @@
 /**
- * 
+ * JIRA Modal Tamer Extension
  */
 
 const EXTENSION_PREFIX = 'jmt'
 const DRAGGABLE_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="24px" height="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>'
 
-const handleMutation = (mutationsList, observer) => {
-  for (let mutation of mutationsList) {
-    if (mutation.type === 'childList') {
-      const { dialog: addedDialog, legacy: addedDialogLegacy } = getDialogFromNodeList(mutation.addedNodes)
-      const { dialog: removedDialog, legacy: removedDialogLegacy } = getDialogFromNodeList(mutation.removedNodes)
+/**
+ * Look for the presence of a JIRA dialog (modal) based on a node. We try to find
+ * the dialog a variety of ways, taking legacy vs new JIRA modals into account.
+ */
+const getDialogFromNode = (node) => {
+  let result = { dialog: null, legacy: null }
 
-      if (addedDialog && !addedDialog.attributes.draggable) {
-        addDraggable(addedDialog, addedDialogLegacy)
-      } else if (removedDialog && removedDialog.attributes.draggable) {
-        removeDraggable(removedDialog, removedDialogLegacy)
-      }
-    }
+  if (!node.tagName) {
+    return result
   }
+
+  const descendant = node.querySelector('[role="dialog"], .jira-dialog')
+  const ascendant = node.closest('[role="dialog"], .jira-dialog')
+
+  if (node.attributes.role === 'dialog' || node.classList.contains('jira-dialog')) {
+    result = { ...result, dialog: node }
+  } else if (descendant) {
+    result = { ...result, dialog: descendant }
+  } else if (ascendant) {
+    result = { ...result, dialog: ascendant }
+  }
+
+  if (result.dialog) {
+    const legacy = result.dialog.classList.contains('jira-dialog')
+    result = { ...result, legacy }
+  }
+
+  return result
 }
 
+/**
+ * Look for the presence of a JIRA dialog in a list of nodes.
+ * @see getDialogFromNode
+ */
 const getDialogFromNodeList = (nodeList) => {
-  let result = { dialog: null, legacy: false }
+  let result = { dialog: null, legacy: null }
 
   if (!nodeList.length) {
     return result
   }
 
   for (let node of nodeList) {
-    if (!node.tagName) {
-      continue
-    }
+    const { dialog, legacy } = getDialogFromNode(node)
 
-    const descendant = node.querySelector('[role="dialog"], .jira-dialog')
-    const ascendant = node.closest('[role="dialog"], .jira-dialog')
-
-    let dialogNode = null
-    
-    if (node.attributes.role === 'dialog' || node.classList.contains('jira-dialog')) {
-      dialogNode = node
-    } else if (descendant) {
-      dialogNode = descendant
-    } else if (ascendant) {
-      dialogNode = ascendant
-    }
-
-    if (dialogNode) {
-      const legacy = dialogNode.classList.contains('jira-dialog')
-      result = { dialog: dialogNode, legacy }
+    if (dialog) {
+      result = { dialog, legacy }
       break
     }
   }
@@ -122,7 +125,7 @@ const dragMoveListener = (event) =>{
   const { scrim } = getScrim(target)
   target.style.opacity = 0.3
   if (scrim) {
-    scrim.style.opacity = 0.1
+    scrim.style.opacity = 0
   }
 }
 
@@ -159,6 +162,21 @@ const getScrim = (dialogEl) => {
   }
 
   return result
+}
+
+const handleMutation = (mutationsList, observer) => {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      const { dialog: addedDialog, legacy: addedDialogLegacy } = getDialogFromNodeList(mutation.addedNodes)
+      const { dialog: removedDialog, legacy: removedDialogLegacy } = getDialogFromNodeList(mutation.removedNodes)
+
+      if (addedDialog && !addedDialog.attributes.draggable) {
+        addDraggable(addedDialog, addedDialogLegacy)
+      } else if (removedDialog && removedDialog.attributes.draggable) {
+        removeDraggable(removedDialog, removedDialogLegacy)
+      }
+    }
+  }
 }
 
 /* Unfortunately JIRA can inject the dialog in multiple places, including directly 

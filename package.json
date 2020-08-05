@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/nandastone/jira-modal-tamer-extension.git"
   },
-  "author": "",
+  "author": "Matt Stone",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nandastone/jira-modal-tamer-extension/issues"

@@ -1,7 +1,7 @@
 {
   "name": "JIRA Modal Tamer",
   "description" : "Drag and minimise JIRA modals for an easier workflow.",
-  "version": "1.0",
+  "version": "0.0.1",
   "permissions": [
     "activeTab"
   ],

@@ -1,0 +1,19 @@
+{
+  "name": "jira-modal-tamer-extension",
+  "version": "0.0.1",
+  "description": "Drag and minimise JIRA modals for an easier workflow.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nandastone/jira-modal-tamer-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nandastone/jira-modal-tamer-extension/issues"
+  },
+  "homepage": "https://github.com/nandastone/jira-modal-tamer-extension#readme"
+}

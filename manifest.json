@@ -11,5 +11,10 @@
       "js": ["dist/interact.min.js", "dist/inject.js"]
     }
   ],
+  "icons": { 
+    "16": "dist/icon-16.png",
+    "48": "dist/icon-48.png",
+   "128": "dist/icon-128.png" 
+  },
   "manifest_version": 2
 }

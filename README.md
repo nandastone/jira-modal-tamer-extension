@@ -8,9 +8,9 @@ Chrome extension for making JIRA modals easier to work with.
 
 ![](assets/demo.gif)
 
-* Drag and move "Issue Details" and "Create New Issue" modals so you can see the content underneath.
+## Features
 
-Other modal types have not been tested. If you find unsupported modals, or any bugs, please raise an issue.
+* Drag and move "Issue Details" and "Create New Issue" modals so you can see the content underneath. Other modal types have not been tested. If you find unsupported modals, or any bugs, please raise an issue.
 
 ## Installation
 

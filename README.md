@@ -2,7 +2,9 @@
 
 https://github.com/nandastone/jira-modal-tamer-extension
 
-Chrome extension for making JIRA modals easier to work with:
+Chrome extension for making JIRA modals easier to work with.
+
+![](assets/demo.gif)
 
 * Drag and move "Issue Details" and "Create New Issue" modals so you can see the content underneath.
 

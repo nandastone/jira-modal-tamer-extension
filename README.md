@@ -1,5 +1,7 @@
 # JIRA Modal Tamer
 
+![](assets/logo.png)
+
 https://github.com/nandastone/jira-modal-tamer-extension
 
 Chrome extension for making JIRA modals easier to work with.

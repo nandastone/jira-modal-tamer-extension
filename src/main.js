@@ -1,9 +1,9 @@
-/**
- * JIRA Modal Tamer Extension
- */
+import interact from 'interactjs'
+import dragIndicatorSvg from './assets/drag_indicator-black-24dp.svg'
+
+// @todo Split file up on logical bounds.
 
 const EXTENSION_PREFIX = 'jmt'
-const DRAGGABLE_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="24px" height="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>'
 
 /**
  * Look for the presence of a JIRA dialog (modal) based on a node. We try to find
@@ -46,7 +46,7 @@ const getDialogFromNodeList = (nodeList) => {
     return result
   }
 
-  for (let node of nodeList) {
+  for (const node of nodeList) {
     const { dialog, legacy } = getDialogFromNode(node)
 
     if (dialog) {
@@ -65,14 +65,15 @@ const addDraggable = (dialogEl, legacy = false) => {
 
   // Add handle element to dialog.
   const handle = document.createElement('div')
-  handle.classList.add(`${EXTENSION_PREFIX}--draggable-handler`)
-  handle.style.position = 'absolute'
-  handle.style.top = '4px'
-  handle.style.left = legacy ? '4px' : '0px'
-  handle.style.width = '24px'
-  handle.style.height = '24px'
-  handle.innerHTML = DRAGGABLE_ICON_SVG
-  dialogEl.appendChild(handle)
+  handle.innerHTML = `
+    <div
+      style="position: absolute; top: 4px; left: ${legacy ? '4px' : '0px'} with: 24px; height: 24px;"
+      class="${EXTENSION_PREFIX}--draggable-handler"
+    >
+      <img src="${dragIndicatorSvg}" />
+    </div>
+  `
+  dialogEl.append(handle)
 
   interact(dialogEl)
     .draggable({
@@ -106,7 +107,7 @@ const removeDraggable = (dialogEl, legacy = false) => {
   interact(dialogEl).unset()
 }
 
-const dragMoveListener = (event) =>{
+const dragMoveListener = (event) => {
   var target = event.target
   // keep the dragged position in the data-x/data-y attributes
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
@@ -155,7 +156,7 @@ const getScrim = (dialogEl) => {
   } else {
     // Legacy dialog + scrim used by the "Create Issue" modal.
     const legacyScrim = document.querySelector('.aui-blanket')
-    
+
     if (legacyScrim) {
       result = { scrim: legacyScrim, legacy: true }
     }
@@ -165,7 +166,7 @@ const getScrim = (dialogEl) => {
 }
 
 const handleMutation = (mutationsList, observer) => {
-  for (let mutation of mutationsList) {
+  for (const mutation of mutationsList) {
     if (mutation.type === 'childList') {
       const { dialog: addedDialog, legacy: addedDialogLegacy } = getDialogFromNodeList(mutation.addedNodes)
       const { dialog: removedDialog, legacy: removedDialogLegacy } = getDialogFromNodeList(mutation.removedNodes)
@@ -179,7 +180,7 @@ const handleMutation = (mutationsList, observer) => {
   }
 }
 
-/* Unfortunately JIRA can inject the dialog in multiple places, including directly 
+/* Unfortunately JIRA can inject the dialog in multiple places, including directly
 under the body. This means we need to observe the entire body. */
 const observerRoot = document.querySelector('body')
 const observerConfig = { childList: true, subtree: true }

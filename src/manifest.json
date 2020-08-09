@@ -8,13 +8,13 @@
   "content_scripts": [
     {
       "matches": ["https://*.atlassian.net/*"],
-      "js": ["dist/interact.min.js", "dist/inject.js"]
+      "js": ["index.min.js"]
     }
   ],
-  "icons": { 
-    "16": "dist/icon-16.png",
-    "48": "dist/icon-48.png",
-   "128": "dist/icon-128.png" 
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+   "128": "icon-128.png"
   },
   "manifest_version": 2
 }

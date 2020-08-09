@@ -2,9 +2,10 @@
   "name": "jira-modal-tamer-extension",
   "version": "0.0.1",
   "description": "Drag and minimise JIRA modals for an easier workflow.",
-  "main": "index.js",
+  "browser": "dist/inject.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup --config"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,18 @@
   "bugs": {
     "url": "https://github.com/nandastone/jira-modal-tamer-extension/issues"
   },
-  "homepage": "https://github.com/nandastone/jira-modal-tamer-extension#readme"
+  "homepage": "https://github.com/nandastone/jira-modal-tamer-extension#readme",
+  "dependencies": {
+    "interactjs": "^1.9.20"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "eslint": "^7.6.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
 }

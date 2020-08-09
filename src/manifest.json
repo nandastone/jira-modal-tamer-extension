@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "matches": ["https://*.atlassian.net/*"],
-      "js": ["interact.min.js"]
+      "js": ["index.min.js"]
     }
   ],
   "icons": {

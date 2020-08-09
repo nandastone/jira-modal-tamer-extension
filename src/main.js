@@ -1,12 +1,10 @@
 import interact from 'interactjs'
+import dragIndicatorSvg from './assets/drag_indicator-black-24dp.svg'
 
-// @todo Import and inline SVG
 // @todo Split file up on logical bounds.
-// @todo Build into dist, and copy in the manifest.
 // @todo Automatically bundle for App Store as part of build.
 
 const EXTENSION_PREFIX = 'jmt'
-const DRAGGABLE_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="24px" height="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>'
 
 /**
  * Look for the presence of a JIRA dialog (modal) based on a node. We try to find
@@ -68,14 +66,15 @@ const addDraggable = (dialogEl, legacy = false) => {
 
   // Add handle element to dialog.
   const handle = document.createElement('div')
-  handle.classList.add(`${EXTENSION_PREFIX}--draggable-handler`)
-  handle.style.position = 'absolute'
-  handle.style.top = '4px'
-  handle.style.left = legacy ? '4px' : '0px'
-  handle.style.width = '24px'
-  handle.style.height = '24px'
-  handle.innerHTML = DRAGGABLE_ICON_SVG
-  dialogEl.appendChild(handle)
+  handle.innerHTML = `
+    <div
+      style="position: absolute; top: 4px; left: ${legacy ? '4px' : '0px'} with: 24px; height: 24px;"
+      class="${EXTENSION_PREFIX}--draggable-handler"
+    >
+      <img src="${dragIndicatorSvg}" />
+    </div>
+  `
+  dialogEl.append(handle)
 
   interact(dialogEl)
     .draggable({

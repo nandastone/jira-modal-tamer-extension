@@ -2,7 +2,6 @@ import interact from 'interactjs'
 import dragIndicatorSvg from './assets/drag_indicator-black-24dp.svg'
 
 // @todo Split file up on logical bounds.
-// @todo Automatically bundle for App Store as part of build.
 
 const EXTENSION_PREFIX = 'jmt'
 

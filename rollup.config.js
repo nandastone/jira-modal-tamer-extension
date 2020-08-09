@@ -11,7 +11,9 @@ export default {
     file: 'dist/index.min.js',
     format: 'iife',
     name: 'main',
-    plugins: [terser()]
+    plugins: [
+      terser()
+    ]
   },
   plugins: [
     nodeResolve(),
@@ -23,5 +25,6 @@ export default {
         { src: 'src/manifest.json', dest: 'dist' },
         { src: 'src/assets/icon-*.png', dest: 'dist' }
       ]
-    })]
+    })
+  ]
 }

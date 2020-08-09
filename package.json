@@ -1,6 +1,6 @@
 {
   "name": "jira-modal-tamer-extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tame JIRA modal windows, allowing you to drag and peek them.",
   "browser": "dist/inject.js",
   "scripts": {

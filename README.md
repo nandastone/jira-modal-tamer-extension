@@ -1,12 +1,12 @@
 # JIRA Modal Tamer
 
-![](assets/logo.png)
+![](docs/logo.png)
 
 https://github.com/nandastone/jira-modal-tamer-extension
 
-Chrome extension for making JIRA modals easier to work with.
+Tame JIRA modal windows, allowing you to drag and peek them.
 
-![](assets/demo.gif)
+![](docs/demo.gif)
 
 ## Features
 

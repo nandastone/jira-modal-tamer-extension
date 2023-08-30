@@ -21,7 +21,7 @@
   "homepage": "https://github.com/nandastone/jira-modal-tamer-extension#readme",
   "dependencies": {
     "cross-var": "^1.1.0",
-    "interactjs": "^1.9.20"
+    "interactjs": "^1.10.18"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
